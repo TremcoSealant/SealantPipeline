@@ -1,0 +1,428 @@
+/*****************************************************************
+    GLOBAL CSS "RESET"
+    IMPORTANT: Use CSS --DXP VARIABLES, ONLY
+******************************************************************/
+
+h1 {
+    font-family: var(--dxp-s-text-heading-extra-large-font-family);
+    font-size: var(--dxp-s-text-heading-extra-large-font-size);
+    font-weight: var(--dxp-s-text-heading-extra-large-font-weight);
+    line-height: var(--dxp-s-text-heading-extra-large-line-height);
+}
+
+h2 {
+    font-family: var(--dxp-s-text-heading-large-font-family);
+    font-size: var(--dxp-s-text-heading-large-font-size);
+    font-weight: var(--dxp-s-text-heading-large-font-weight);
+    line-height: var(--dxp-s-text-heading-large-line-height);
+}
+
+h3 {
+    font-family: var(--dxp-s-text-heading-medium-font-family);
+    font-size: var(--dxp-s-text-heading-medium-font-size);
+    font-weight: var(--dxp-s-text-heading-medium-font-weight);
+    line-height: var(--dxp-s-text-heading-medium-line-height);
+}
+
+h4 {
+    font-family: var(--dxp-s-text-heading-small-font-family);
+    font-size: var(--dxp-s-text-heading-small-font-size);
+    font-weight: var(--dxp-s-text-heading-small-font-weight);
+    line-height: var(--dxp-s-text-heading-small-line-height);
+}
+
+p {
+    font-weight: var(--dxp-s-body-font-weight);
+    font-size: var(--dxp-s-body-font-size);
+    font-family: var(--dxp-s-body-font-family);
+    line-height: var(--dxp-s-body-line-height);
+}
+
+/*****************************************************************
+    SLDS/OUT-OF-THE-BOX COMPONENT OVERRIDES
+    IMPORTANT: Use CSS --DXP VARIABLES, ONLY
+******************************************************************/
+
+.navbar__menu-item,
+.slds-nav-vertical__action {
+    font-family: var(--dxp-s-text-heading-small-font-family);
+    font-size: var(--dxp-s-text-heading-small-font-size);
+    font-weight: var(--dxp-s-button-font-weight);
+}
+
+.slds-container_x-large {
+    max-width: var(--dxp-c-section-columns-max-width, var(--dxp-s-section-columns-max-width));
+}
+
+/* For Scrolling */
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    display: none !important;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Category Filters not displaying when text is long UI issue fixes */
+li.commerce_search-categoryTree_categoryTree.slds-truncate {
+  display: flex;
+  white-space: normal;
+}
+
+/* My Profile Password UI issue fixes */
+commerce-my-account-password .slds-card {
+    align-items: center;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+commerce-my-account-password .slds-card__header {
+    margin-top: var(--dxp-g-spacing-none);
+    padding-top: var(--dxp-g-spacing-none);
+}
+
+/* Global colors */
+:root {
+    --sds-c-accordion-summary-color-background: #D1EAE5;
+    --benefits-card-bg: #E8F2FA;
+    --border1: #65A9E0;
+    --lightbg: #FAFAFA;
+    --gallery-badge: #4CA693;
+    --user-border: #EDF0F4;
+    --select-border: #4C5158;
+    --mobile-logo-height: 21px;
+    --table-border:#CED0D1;
+    --progress-bar-error: #FF0000;
+
+    --slds-c-button-brand-color-background: #0BA992;
+    --slds-c-button-brand-color-border: #0BA992;
+    --slds-c-button-brand-text-color: #FFFFFF;
+
+    /* Hover State */
+    --slds-c-button-brand-color-background-hover: #0A9A82;
+    --slds-c-button-brand-color-border-hover: #0A9A82;
+    --slds-c-button-brand-text-color-hover: #FFFFFF;
+
+    /* Active/Pressed State */
+    --slds-c-button-brand-color-background-active: #098B75;
+    --slds-c-button-brand-color-border-active: #098B75;
+    --slds-c-button-brand-text-color-active: #FFFFFF;
+
+    /* Focus State Shadow */
+    --slds-c-button-shadow-focus: 0 0 3px #0BA992;
+
+    /* Button vertical sizing - no vertical padding for compact row */
+    --slds-c-button-line-height: 2.25rem;
+    --slds-c-button-spacing-block-start: 0;
+    --slds-c-button-spacing-block-end: 0;
+
+    /* CTA Colors - Brand Green */
+    --tremco-cta-bg: #0BA992;
+    --tremco-cta-brand: #0BA992;
+    --tremco-cta-text: #FFFFFF;
+    --tremco-cta-hover-bg: #0A9A82;
+    --tremco-cta-disabled-bg: #B3E0D9;
+
+    /* Badge Colors - Gray (not green per design feedback) */
+    --tremco-badge-text: #FFFFFF;
+
+    /* Secondary Action Colors - Muted gray (9px font, not primary color) */
+    --tremco-secondary-text: #6b7785;
+    --tremco-secondary-hover-bg: #f3f4f6;
+    --tremco-secondary-hover-text: #4b5563;
+
+    /* Product Text - Product name now teal (#15515e), others neutral */
+    --tremco-text-primary: #444444;
+    --tremco-text-secondary: rgba(68, 68, 68, 0.7);
+    --tremco-text-muted: #718096;
+    --tremco-text-brand: #15515E;
+    --tremco-text-brand-hover: #0f3d45;
+    --tremco-text-white: #ffffff;
+    --tremco-text-pagination: #667085;
+    --tremco-text-pagination-cta: #344054;
+
+    /* Border and Background */
+    --tremco-border-color: #E9EFF5;
+    --tremco-hover-border: #4d95bf;
+    --tremco-qty-border: #C7CBCE;
+    --tremco-bg-white: #ffffff;
+    --tremco-img-bg: #E9EFF5;
+    --tremco-img-bg-hover: #f9fafb;
+    --tremco-badge-bg: #394D6B;
+    --tremco-product-card-hover: #D6E2EC;
+    --tremco-product-card-skeleton: #f3f3f3;
+    --tremco-product-card-loading: #e5e5e5;
+    --tremco-input-focus: #fafafa;
+    --tremco-border-pagination: #D0D5DD;
+    --tremco-breadcrumbs-bg: #D1D5DB;
+
+    /* Font Weight */
+    --tremco-font-weight-regular: 400;
+    --tremco-font-weight-medium: 500;
+    --tremco-font-weight-semibold: 600;
+    --tremco-font-weight-bold: 700;
+}
+
+.progress-bar-error .slds-progress-bar__value {
+    background: var(--progress-bar-error);
+}
+
+.slds-listbox--vertical .slds-listbox__option.slds-has-focus,.slds-listbox--vertical .slds-listbox__option:focus,.slds-listbox--vertical .slds-listbox__option:hover,.slds-listbox_vertical .slds-listbox__option.slds-has-focus,.slds-listbox_vertical .slds-listbox__option:focus,.slds-listbox_vertical .slds-listbox__option:hover {
+    color: var(--dxp-g-root);
+}
+
+.custom-input .slds-form-element__label,.custom-input-address .slds-form-element__label,.custom-checkbox .slds-form-element__label{
+    font-size:var(--dxp-g-font-size-5);
+}
+.custom-input-address .slds-form-element__row{
+    margin-bottom: var(--dxp-g-spacing-small);
+}
+.custom-input-address .slds-form-element__legend .slds-required{
+    display: none;
+}
+.card-address-height.slds-visual-picker__figure{
+    border: 1px solid var(--border1);
+    box-shadow: none;
+}
+.card-address-height.slds-visual-picker input[disabled]~label .slds-visual-picker__figure{
+    background-color: var(--dxp-g-root);
+}
+.card-address-height .card-address-fit{
+    opacity: 0.8;
+}
+.card-address-height.slds-visual-picker input:checked~label .slds-visual-picker__text{
+    border: 2px solid var(--dxp-g-brand);
+    box-shadow: none;
+}
+
+.card-address-height.slds-visual-picker input:checked~label .slds-visual-picker__text:after{
+    border-top-color:var(--dxp-g-brand);
+    border-right-color:var(--dxp-g-brand);
+    border-width: 1.3rem;
+}
+.custom-badge.slds-badge{
+    border-radius: var(--slds-c-badge-radius-border,var(--sds-c-badge-radius-border,4px));
+    background:var(--sds-c-accordion-summary-color-background);
+    border:none;
+}
+.text_container a{
+    color: var(--dxp-g-destructive) !important;
+    text-decoration:underline !important;
+}
+
+commerce-my-account-password .slds-card{
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+commerce-my-account-password .slds-card__header{
+    position: static;
+    right: auto;
+    bottom: auto;
+    z-index: auto;
+    margin-top: 0;
+    padding-top: 0;
+    align-self: center;
+}
+
+/* SSN-326: ensure visible gap between "Password" label and "Change" action */
+commerce-my-account-password header,
+commerce-my-account-password lightning-card header[part='header'],
+commerce-my-account-password .slds-card__header {
+    display: flex !important;
+    align-items: center;
+    column-gap: 0.375rem;
+}
+
+/* Fallback in case the header content is not honoring flex gap in this runtime */
+commerce-my-account-password .slds-card__header a,
+commerce-my-account-password .slds-card__header lightning-formatted-url,
+commerce-my-account-password header a,
+commerce-my-account-password header lightning-formatted-url {
+    margin-left: 0.375rem !important;
+}
+.custom-modal .slds-modal__content{
+    width: 100%;
+    height: 100%;
+}
+c-rocket-c-s-v-add-to-cart .slds-file-selector__button{
+    white-space: nowrap;
+}
+c-rocket-c-s-v-add-to-cart .slds-file-selector__text{
+    white-space: nowrap;
+    font-size: var(--dxp-g-font-size-4);
+}
+c-rocket-c-s-v-add-to-cart.component-wrapper-spacer{
+    margin-bottom: 0;
+}
+c-rocket-c-s-v-add-to-cart.component-wrapper-spacer .input-file-upload{
+    justify-content: flex-end;
+}
+c-rocket-c-s-v-add-to-cart.component-wrapper-spacer .input-file-upload .slds-button{
+    white-space: nowrap;
+}
+.right-position{
+    margin-right:-3.4375rem;
+}
+
+.account-switch-icon .slds-icon{
+    --slds-c-icon-color-foreground:var(--dxp-g-root-contrast-1);
+    width: 1rem;
+    height: 1rem;
+}
+.account-button .slds-button{
+    white-space: nowrap;
+}
+
+.account-switcher__link .slds-icon-action-approval .slds-icon{
+    display: block;
+}
+
+.account-switcher__link .slds-icon-standard-account,.account-switcher__link .slds-icon-action-approval{
+    background: var(--dxp-g-brand);
+}
+.card-edit-button .slds-button{
+    font-size: var(--dxp-g-font-size-5);
+    font-family: var(--dxp-s-body-font-family);
+}
+.card-edit-button .slds-button:focus,.card-edit-button .slds-button:active{
+    box-shadow: none;
+    border: none;
+}
+.add-from-quote-btn .slds-button {
+    margin-bottom: 1rem;
+}
+.activate-icon span.slds-grid{
+    margin-right:var(--dxp-g-spacing-xsmall);
+}
+.edit-address-selected .slds_button-tertiary{
+    flex-direction: row-reverse;
+}
+.mobile-card-container .slds-rich-text-editor__output span {
+    word-break: break-all;
+}
+.action-button .card-item__quantity-selector{
+    margin-bottom: 0;
+}
+.action-button .card-item__quantity-selector .slds-m-right_medium{
+    margin-right: 0;
+}
+.wish-list .slds-dropdown__item>a:focus, .wish-list .slds-dropdown__item>a:hover{
+    background:var(--dxp-g-brand);
+    color:var(--dxp-g-root);
+}
+.width-100 {
+    width: 100%;
+}
+
+.filter-item lightning-combobox.slds-form-element,
+.filter-item lightning-input.search-input {
+    margin-bottom: 0 !important
+}
+
+.page-size-container lightning-combobox.page-size-picker {
+    width: 200px;
+}
+
+/* Breadcrumbs */
+commerce-breadcrumbs {
+  --slds-c-breadcrumbs-text-color: var(--tremco-text-primary);
+}
+
+commerce-breadcrumbs nav {
+    background: var(--tremco-breadcrumbs-bg);
+    padding: 1rem;
+}
+
+commerce-breadcrumbs li {
+    font-size: 0.875rem !important;
+    font-weight: var(--tremco-font-weight-regular);
+    line-height: 1.125rem;
+    color: var(--tremco-text-primary) !important;
+    display: flex;
+    align-items: center;
+}
+
+commerce-breadcrumbs li p,
+commerce-breadcrumbs li a {
+    font-size: 0.875rem;
+    font-weight: var(--tremco-font-weight-bold);
+    color: var(--tremco-text-primary) !important;
+}
+
+c-commerce-summary {
+    margin-bottom: 1.5rem;
+}
+
+c-commerce-summary p {
+    color: var(--tremco-text-primary) !important;
+    font-size: 1rem;
+    line-height: 1.6rem;;
+}
+
+c-commerce-standalone-search-box {
+    width: 100%;
+}
+
+c-commerce-results-per-page .slds-form-element,
+c-commerce-results-per-page lightning-combobox .slds-form-element,
+.c-commerce-sort-wrapper .slds-form-element {
+    margin-bottom: 0 !important;
+}
+
+lightning-combobox.sorting-dropdown button {
+    height: 2.5rem;
+    border: 1px solid var(--tremco-border-color);
+}
+
+lightning-combobox.show-per-page-container button {
+    height: 2.69rem;
+    border: 1px solid var(--tremco-border-color);
+}
+
+lightning-combobox.sorting-dropdown span,
+lightning-combobox.show-per-page-container span {
+    align-self: center;
+}
+
+/*****************************************************************
+    BREAKPOINTS
+******************************************************************/
+
+@media (min-width: 768px) and (max-width: 1024px) {}
+
+@media (min-width: 1024px) {}
+
+@media (max-width: 767px) {
+    .dxp-content-layout-site-logo {
+        height: var(--mobile-logo-height) !important;
+    }
+    .neutral-rocket-button .slds-button{
+        width: 100%;
+    }
+    .slds-notify--toast, .slds-notify_toast{
+        min-width: 100%;
+    }
+    .right-position{
+        margin-right: 0;
+    }
+    commerce-my-account-password .slds-card__header{
+        bottom: auto;
+    }
+    .add-from-quote-btn .slds-button {
+        margin-right: 8px;
+        margin-top: 2px;
+    }
+
+    .product-documentation-table {
+        background-color: #F2F8F9;
+    }
+}
