@@ -1,0 +1,153 @@
+/* Common styles for all views */
+.red-message {
+    color: red;
+}
+
+.margin-warning-line {
+    border: 3px solid #c23934;
+}
+
+.custom-layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start; 
+}
+
+.custom-layout-item {
+    flex: 1 1 auto;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.delete-icon {
+    flex: 0 0 auto;
+    align-self: center;
+}
+
+.pricing-container {
+    flex: 1; /* Flex grow to take available space */
+    margin-right: 20px; /* Space between pricing and Dryvit comboboxes */
+}
+
+.pricing-details {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+
+.line-total {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
+}
+
+.total-label, .total-value {
+    font-weight: bold;
+    font-size: 1.2em; /* Adjust the size as needed */
+}
+
+.total-value {
+    margin-left: 8px;
+    color: green;
+}
+
+.error-container {
+    display: flex;
+    align-items: center; /* Align vertically */
+    padding: 0.5rem;
+    border: 1px solid red;
+    background-color: #FFEEEE; /* light red background */
+    margin-bottom: 1rem; /* Add space below the error message */
+}
+
+.line-error-message {
+    color: red;
+    font-weight: bold;
+    margin-right: 1rem; /* Add some space between the error title and description */
+}
+
+.line-error-description {
+    color: red;
+    flex-grow: 1; /* Allow the description to fill the remaining space */
+    white-space: normal; /* Ensure the text wraps naturally */
+}
+
+.delete-icon {
+    flex: 0 0 auto;
+    align-self: center;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center; /* Align icons vertically in the middle */
+    justify-content: flex-start; /* Align icons to the start of the container */
+}
+
+.product-lookup {
+    display: flex;
+    align-items: center; /* Align the delete button and input field in the middle */
+}
+
+.product-lookup .icon-container {
+    flex: 0 0 auto; /* Do not grow or shrink and keep the content width */
+}
+
+.product-lookup lightning-input {
+    flex: 1; /* Grow to take available space */
+}
+
+.icon-container {
+    margin-top: 18px;
+}
+
+.custom-combobox {
+    width:185px;
+}
+
+/* Dryvit container styling */
+.dryvit-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.dryvit-container > .custom-layout-item {
+    margin-bottom: 10px; /* Adjust spacing between comboboxes */
+}
+
+/* Media queries for responsive adjustments */
+@media (max-width: 767px) {
+    .custom-layout-item {
+        flex-basis: 100%; /* Full width for mobile, one input per row */
+    }
+
+}
+
+@media (min-width: 768px) {
+    .account-lookup, .product-lookup {
+        min-width: 360px;
+        max-width: 400px;
+        width: auto;
+        white-space: nowrap;
+    }
+
+    .date-input {
+        width: auto;
+        white-space: nowrap;
+        max-width: 150px;
+    }
+
+    .custom-layout-item:not(.account-lookup):not(.product-lookup):not(.date-input) {
+        flex-grow: 1; /* Regular size for other inputs */
+        max-width: 100px;
+    }
+
+    .custom-layout {
+        justify-content: flex-start; /* Align children to the start of the main axis */
+    }
+
+    .pricing-container,
+    .dryvit-container {
+        flex: 1; /* Allow the containers to take equal space */
+    }
+}

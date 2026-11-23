@@ -1,0 +1,69 @@
+<template>
+    <div class="slds-m-right_xx-small profile-menu">
+        <template lwc:if={isGuest}>
+            <a onclick={handleLogin} class="profile-menu__guest-link">
+                <div class="profile-menu__guest-link-content slds-media slds-media_center slds-no-space slds-truncate">
+                    <c-tremco-svg-provider icon-name="showUserIcon" svg-color={authTextColor}></c-tremco-svg-provider>
+                    <p class="profile-menu__guest-link-text slds-show_medium slds-truncate slds-p-horizontal_x-small">{guestLinkText}</p>
+                </div>
+            </a>
+        </template>
+        <template lwc:else>
+            <div class="profile-menu__trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-grid" tabindex="-1">
+                <button class="profile-menu__auth-button slds-button slds-no-space" onclick={toggleMenu} aria-haspopup="true">
+                    <div class="slds-media slds-media_center slds-no-space slds-truncate">
+                        <div class="slds-grid">
+                            <template lwc:if={companyLogoIcon}>
+                                <lightning-icon
+                                    class="profile-menu__icon slds-icon-utility-company slds-icon_container"
+                                    icon-name="utility:company"
+                                    size="xx-small"
+                                ></lightning-icon>
+                            </template>
+                            <template lwc:else>
+                                <c-tremco-svg-provider icon-name="showUserIcon" svg-color={authTextColor}></c-tremco-svg-provider>
+                            </template>
+                        </div>
+                        <template lwc:if={showUserName}>
+                                <p class="profile-menu__auth-button-text slds-text-align_left slds-show_medium slds-p-horizontal_x-small">
+                                    <span>{userName}</span>
+                                    <template lwc:if={showCompanyName}>
+                                        <span> {accountName}</span>
+                                    </template>
+                                </p>
+                        </template>
+                        <lightning-icon
+                                class="profile-menu__icon slds-show_medium slds-icon-utility-chevrondown slds-icon_container"
+                                icon-name="utility:chevrondown"
+                                size="xx-small"
+                            ></lightning-icon>
+                    </div>
+                </button>
+                <div class="profile-menu__dropdown slds-dropdown slds-dropdown_right slds-nubbin_top-right" style="top: 40px;">
+                    <ul class="slds-scrollable_y profile-menu__list slds-text-align_left" role="menu">
+                        <!-- username in mobile dropdown menu only -->
+                        <li class="slds-dropdown__item slds-border_bottom">
+                            <p class="profile-menu__list-item-mobile slds-truncate slds-p-top_small slds-p-bottom_none slds-p-horizontal_medium">
+                                <span class="slds-truncate">{userName}</span>
+                            </p>
+                            <template lwc:if={showCompanyName}>
+                                <p class="profile-menu__list-item-mobile slds-truncate slds-p-bottom_small slds-p-top_none slds-p-horizontal_medium slds-text-title_bold">
+                                    <span class="slds-truncate">{accountName}</span>
+                                </p>
+                            </template>
+                        </li>
+                        <!---->
+                        <template for:each={visibleMenuItems} for:item="action">
+                            <li class="slds-dropdown__item" key={action.actionValue}>
+                                <a href={action.actionValue} class="profile-menu__list-item" role="menuitem" tabindex="-1">{action.label}</a>
+                            </li>
+                        </template>
+                        <li class="slds-dropdown__item slds-border_top">
+                            <a onclick={handleLogout} role="menuitem" class="profile-menu__list-item" tabindex="-1">{authLogOut}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,71 @@
+/* quoteLineEditor.css */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
+    min-height: 300px; /* Adjust this value as needed */
+}
+
+
+.error-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
+    padding: var(--lwc-spacingMedium, 1rem);
+}
+
+.error {
+    font-weight: bold;
+    text-align: center;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: var(--lwc-spacingXSmall, 0.5rem);
+}
+
+.heading{
+    font-weight: bold;
+    font-size: large;
+}
+
+.red-message {
+    color: red;
+}
+
+/* Style for dragged item */
+.dragging {
+    opacity: 0.1;
+    background-color: #cceeff;
+    border: 2px dashed #0070d2;
+}
+
+/* Style for drop target */
+.drop-target {
+    border: 2px solid green;
+    background-color: #e6ffe6;
+}
+
+.date-input {
+    width:auto;
+    white-space: nowrap;
+    max-width:282px;
+}
+
+.reloadbtn {
+    margin-top:22px;
+}
+
+/* Add a media query for mobile devices */
+@media (max-width: 799px) {
+    .slds-align_absolute-center {
+        justify-content: flex-start;
+    }
+    .button-group {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left:20px;
+    }
+}
