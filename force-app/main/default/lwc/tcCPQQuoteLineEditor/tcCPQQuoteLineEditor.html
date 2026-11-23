@@ -1,0 +1,210 @@
+<template>
+    <div class="main-container">
+    <lightning-card>
+        <!-- Line Errors Section -->
+        <template if:true={hasLineErrors}>
+            <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                <span class="slds-assistive-text">{labels.errorText}</span>
+                <!-- Icon for Error -->
+                <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+                    <lightning-icon icon-name="utility:error" variant="inverse" size="x-small" alternative-text="Error" title="Error"></lightning-icon>
+                </span>
+                <h2>{labels.lineError}</h2>
+            </div>
+        </template>
+
+        <!-- Pending Changes Section -->
+        <template if:true={hasPendingChanges}>
+            <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+                <span class="slds-assistive-text">{labels.warningText}</span>
+                <!-- Icon for Warning -->
+                <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Description of icon when needed">
+                    <lightning-icon icon-name="utility:warning" size="x-small" alternative-text="unsaved changes" title="unsaved changes"></lightning-icon>
+                </span>
+                <h2>{labels.unsavedChanges}</h2>
+                <!-- Close Button -->
+                <!-- <div class="slds-notify__close">
+                    <button class="slds-button slds-button_icon slds-button_icon-small" title={labels.close}>
+                        <svg class="slds-button__icon" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">{labels.close}</span>
+                    </button>
+                </div> -->
+            </div>
+        </template>
+        <div class="slds-grid slds-wrap">
+            <!-- Column 1 -->
+            <div class="slds-col slds-size_1-of-2">
+                <lightning-input type="date" label="End Date" class="date-input" data-id="endDate" onchange={handleInputChange} value={requestObj.quoteEndDate} disabled={showUpdateDisabled}></lightning-input>
+                <!-- Add more fields here with the same onchange handler -->
+            </div>
+        
+            <!-- Column 2 -->
+            <div class="slds-col slds-size_1-of-2 slds-clearfix">
+                <!-- Float Right Content -->
+                <div class="slds-float_right reloadbtn">
+                    <lightning-button icon-name="utility:refresh" label="Reload Component" title="Refresh" onclick={handleRefresh}></lightning-button>
+                </div>
+            </div>
+        </div>
+        <!-- Spinner Section -->
+        <template if:true={showSpinner}>
+            <lightning-spinner variant="brand" size="medium" alternative-text={labels.loading}></lightning-spinner>
+        </template>
+
+        <!-- Pricing Loaded Section -->
+        <template if:true={pricingLoaded}>
+            <template for:each={requestItems} for:item="item" for:index="index">
+                <!-- Draggable Quote Line Item -->
+                <div class="draggable-quote-line" 
+                    draggable="false" 
+                    data-id={item.Id}
+                    key={item.Id} 
+                    data-index={index}
+                    ondragstart={handleDragStart}
+                    ondragover={handleDragOver}
+                    ondragend={handleDragEnd}
+                    ondrop={handleDrop}
+                    ondragenter={handleDragEnter}
+                    ondragleave={handleDragLeave}>
+                    <c-tc-c-p-q-quote-line-editor-item
+                        key={item.Id} 
+                        item={item}
+                        onrequestpricing={handleChildPricingRequest} 
+                        ondeleteitem={handleDelete} 
+                        onchange={handleItemChange}
+                        onlineitemupdate={hanleLineItemUpdate}
+                        onclone={handleClone}
+                        onpricing={handlePricing}
+                        line-number={item.lineNumber}
+                        is-account={isAccount}
+                        show-disabled={showDisabled}
+                        show-update-disabled={showUpdateDisabled}
+                        has-approver={hasApprover}>
+                    </c-tc-c-p-q-quote-line-editor-item>
+                </div>
+            </template>
+        </template>
+
+        <!-- Button Group Section -->
+        <div class="slds-align_absolute-center slds-m-top_medium">
+            <template if:false={showButtonGroup}>
+                <lightning-spinner variant="brand" size="medium" alternative-text={labels.loading}></lightning-spinner>
+            </template>
+            <template if:true= {showButtonGroup}>
+            <div class="button-group">
+                <template if:false={isSubmitted}>
+                <!-- SSN-69 - Aza -->
+                <lightning-button if:true={showDryvitTintingButton} variant="brand" label="Add Dryvit Factory Tinting" title="Add Dryvit SKU" onclick={handleAddItem} disabled={showUpdateDisabled}></lightning-button>
+                <lightning-button variant="netural" label={labels.getPricing} title={labels.getPricing} onclick={handlePricing} disabled={showUpdateDisabled}></lightning-button>
+                <lightning-button variant="netural" label={labels.cancel} title={labels.cancel} onclick={handleCancel} disabled={showUpdateDisabled}></lightning-button>
+                <lightning-button variant="brand" label={labels.save} title={labels.save} onclick={handleSubmit} disabled={showUpdateDisabled}></lightning-button>
+                    <lightning-button variant="brand" label={labels.saveSubmit} title={labels.submitForApproval} onclick={handleSubmitForApproval} disabled={showUpdateDisabled}></lightning-button>
+                </template>
+                <template if:true={isAccepted}>
+                    <lightning-button variant="brand" label="Unlock for Update" title="Unlock for Update" onclick={handleUnlockForUpdate} disabled={showUpdateButtonDisabled}></lightning-button>
+                </template>
+            </div>
+        </template>
+        </div>
+    </lightning-card>
+
+    <!-- Confirmation Modal --><!--
+    <template if:true={showModalConfirmation}>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{labels.confirmDelete}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>{labels.deleteConfirmation}</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label={labels.cancel} title={labels.cancel} onclick={handleModalCancel}></lightning-button>
+                    <lightning-button class="slds-m-left_x-small" variant="destructive" label={labels.confirm} title={labels.confirm} onclick={handleModalConfirmation}></lightning-button>
+                </footer>
+            </div>
+        </section>
+    </template>-->
+
+    <!-- Approve/Reject Comments Modal -->
+    <template if:true={showApproveModalConfirmation}>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{approveTitle}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-textarea data-id="approveComments" label={labels.comments}></lightning-textarea>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label={labels.cancel} title={labels.cancel} onclick={handleApprovalModalCancel}></lightning-button>
+                    <lightning-button class="slds-m-left_x-small" variant="brand" label={labels.submitApproval} title={labels.submitApproval} onclick={handleApprovalModalConfirmation}></lightning-button>
+                </footer>
+            </div>
+        </section>
+    </template>
+
+    <!-- Cancel Confirmation Modal -->
+    <template if:true={showCancelConfirmation}>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{labels.cancelConfirmation}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>{labels.cancelConfirmationMsg}</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label={labels.no} title={labels.no} onclick={handleCancelConfirmationCancel}></lightning-button>
+                    <lightning-button class="slds-m-left_x-small" variant="destructive" label={labels.yes} title={labels.yes} onclick={handleCancelConfirmationConfirm}></lightning-button>
+                </footer>
+            </div>
+        </section>
+    </template>
+
+    <!-- Submit for Approval Modal -->
+    <template if:true={showSubmitForApprovalModal}>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{labels.submitApproval}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-textarea label={labels.enterComments} value={approvalComments} onchange={handleInitialApprovalComments}></lightning-textarea>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>{labels.approvalModalMessage}</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label={labels.cancel} title={labels.cancel} onclick={handleApprovalModalCancelForSubmission}></lightning-button>
+                    <lightning-button class="slds-m-left_x-small" variant="brand" label={labels.submitForApproval} title={labels.submitForApproval} onclick={handleApprovalCommentsConfirmationForSubmission}></lightning-button>
+                </footer>
+            </div>
+        </section>
+    </template>
+
+    <!-- Margin Warning (SSN-316-Aza) -->
+    <template if:true={showMarginWarningModal}>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Warning</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>Please review the lines in <strong class="red-message">RED</strong> to make sure that Requested Unit of Measure and Requested Price are correct and submit again.</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Ok" title="Ok" onclick={handleMarginWarningAcknowledge}></lightning-button>
+                </footer>
+            </div>
+        </section>
+    </template>
+</div>
+</template>
