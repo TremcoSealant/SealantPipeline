@@ -1,0 +1,312 @@
+<template>
+    <div class={lineContainerClass}>
+        <!-- {_item.sortOrder} -->
+        <template if:true={_item.hasErrors}>
+        <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+                <lightning-icon icon-name="utility:error" variant="inverse" size="x-small" alternative-text="Error" title="Error"></lightning-icon>
+            </span>
+            <h2>
+                <template if:true={_item.errorNotListed}>
+                    <span>The Product is not listed for this Account.</span>
+                </template>
+                <template if:true={_item.errorIsExcluded}>
+                    <span>The Product is excluded from this Account.</span>
+                </template>
+                <template if:true={_item.errorNotInSAP}>
+                    <span>The Product was not found in SAP.</span>
+                </template>
+                <template if:true={_item.errorNotIn2000}>
+                    <span>The Product is not available in the United States.</span>
+                </template>
+                <template if:true={_item.errorNotIn4000}>
+                    <span>The Product is not available in Canada.</span>
+                </template>
+                <template if:true={_item.errorIsDiscontinued}>
+                    <!-- //SSN-340-Aza -->
+                    <span>This product has been discontined.</span>
+                </template>
+                <template if:true={_item.errorIsBlocked}>
+                    <span>The Customer is blocked from ordering.</span>
+                </template>
+            </h2>
+            <div class="slds-notify__close">
+              <button class="slds-button slds-button_icon slds-button_icon-small slds-button_icon-inverse" title="Close">
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Close</span>
+              </button>
+            </div>
+          </div>
+        </template>
+        <template if:true={showSpinner}>
+            <lightning-spinner
+                variant="inverse"
+                size="large"
+                alternative-text="Loading">
+            </lightning-spinner>
+        </template>
+        <div class="custom-layout">
+            <template if:false={_item.isDryvit}>
+            <div class="product-lookup custom-layout-item">
+                <template if:false={isSapQuoteNumberPresent}>
+                    <div class="icon-container">                        
+                        <button data-id="delete" class="slds-button slds-button_icon slds-m-right_small" onclick={handleDelete}>
+                            <lightning-icon icon-name="utility:delete" size="xx-small"></lightning-icon>
+                        </button>
+                    </div>
+                </template>
+                <lightning-input
+                    data-id="product"
+                    label="Product"
+                    value={_item.productDetail}
+                    onchange={handleFieldChange}
+                    class="slds-m-right_xxx-small"
+                    disabled>
+                </lightning-input>
+            </div>
+            </template>
+            <template if:true={_item.isDryvit}>
+                <div class="product-lookup custom-layout-item">
+
+                    <template if:false={isSapQuoteNumberPresent}>
+                        <div class="icon-container">
+                            <button data-id="delete" class="slds-button slds-button_icon slds-m-right_small" onclick={handleDelete}>
+                                <lightning-icon icon-name="utility:delete" size="xx-small"></lightning-icon>
+                            </button>
+                        </div>
+                    </template>
+                    
+                    <div>
+                        <lightning-combobox
+                            class="slds-m-right_small custom-combobox"
+                            name="dryvitProducts"
+                            label="Select Finish"
+                            value={_item.dryvitProductCode}
+                            options={dryvitOptions}
+                            onchange={handleProductChange}
+                            disabled={showDisabled}>
+                        </lightning-combobox>
+                        
+                        <template if:true={_item.productDetail}>
+                            <p class="red-message">Material # - {_item.materialNumber}</p>
+                        </template>
+                    </div>
+                    
+                    <div>
+                <template if:true={initialColorSelection}>
+                        <c-lookup
+                        data-id="Color"
+                        selection={initialColorSelection}
+                        errors={errors}
+                        onsearch={handleColorSearch}
+                        onselectionchange={handleColorChange}
+                        label="Select Product"
+                        placeholder="Search..."
+                        is-multi-entry={isMultiEntry}
+                        new-record-options={newRecordOptions}
+                        min-search-term-length={minSearchTermLength}
+                        disabled={isColorDisabled}>
+                    </c-lookup>
+                </template>
+                        <template if:true={_item.productDetail}>
+                            <p class="red-message">Color Code - {_item.dryvitColorCode}</p>
+                        </template>
+                    </div>
+                </div>
+            </template>
+            
+            
+
+            <div class="custom-layout-item">
+                <lightning-combobox
+                    data-id="uom"
+                    label="Request UOM"
+                    options={uomOptions}
+                    value={_item.uom}
+                    onchange={handleUOMChange}
+                    disabled={showDisabled}
+                    class="slds-m-right_xxx-small">
+                </lightning-combobox>
+            </div>
+
+            <div class="custom-layout-item">
+                <!-- //SSN-340-Aza -->
+                <lightning-input 
+                    data-id="qty" 
+                    type="number" 
+                    label="Quantity" 
+                    value={_item.qty} 
+                    onchange={handleFieldChange} 
+                    onblur={handleQtyBlur}
+                    class="slds-m-right_xxx-small price-input" 
+                    disabled={isQuantityDisabled}>
+                </lightning-input>
+            </div>
+
+            <div class="custom-layout-item">
+                <lightning-input 
+                    data-id="price" 
+                    type="number" 
+                    step=".01" 
+                    label="Request Price" 
+                    value={_item.price} 
+                    onchange={handleFieldChange} 
+                    onblur={handlePriceBlur}
+                    class="slds-m-right_xxx-small price-input" 
+                    disabled={showDisabled}>
+                </lightning-input>
+                <div if:true={_item.tradeDiscount}>
+                    <p class="red-message">Price with Trade Discount: ${requestPriceWithTradeDiscount}</p>
+                </div>
+            </div>
+
+            <div class="custom-layout-item">
+                <lightning-input
+                    data-id="pricingUom"
+                    label="Pricing UOM"
+                    value={_item.pricingUom}
+                    onchange={handleFieldChange}
+                    class="slds-m-right_xxx-small"
+                    disabled>
+                </lightning-input>
+            </div>
+
+            <div class="custom-layout-item">
+                <lightning-input 
+                    disabled 
+                    data-id="pricingUomPrice" 
+                    type="number" 
+                    step=".01" 
+                    label="Price" 
+                    value={_item.pricingUomPrice} 
+                    onchange={handleFieldChange} 
+                    class="slds-m-right_xxx-small">
+                </lightning-input>
+                <div if:true={_item.tradeDiscount}>
+                    <p class="red-message">Price with Trade Discount: ${pricingPriceWithTradeDiscount}</p>
+                </div>
+            </div>
+
+            <div class="custom-layout-item">
+                <lightning-input
+                    data-id="salesUom"
+                    label="Sales UOM"
+                    value={_item.salesUom}
+                    onchange={handleFieldChange}
+                    class="slds-m-right_xxx-small"
+                    disabled>
+                </lightning-input>
+            </div>
+
+            <div class="custom-layout-item">
+                <lightning-input 
+                    data-id="salesUomPrice" 
+                    type="number" 
+                    step=".01" 
+                    label="Sales UOM Price" 
+                    value={_item.salesUomPrice} 
+                    onchange={handleFieldChange} 
+                    class="slds-m-right_xxx-small" 
+                    disabled>
+                </lightning-input>
+                <div if:true={_item.tradeDiscount}>
+                    <p class="red-message">Price with Trade Discount: ${priceWithTradeDiscount}</p>
+                </div>
+            </div>
+
+            <div class="custom-layout-item">
+                <lightning-input 
+                    data-id="salesUomQty" 
+                    type="number" 
+                    label="Sales Quantity" 
+                    value={_item.salesUomQty} 
+                    onchange={handleFieldChange} 
+                    class="slds-m-right_xxx-small" 
+                    disabled>
+                </lightning-input>
+                <div if:true={_item.remainingQty}>
+                    <p class="red-message">Qty Left - {_item.remainingQty}</p>
+                </div>
+                <p class="red-message">Min Qty - {_item.minimumOrderQty}</p>
+                <p class="red-message">Increment - {_item.increment}</p>
+            </div>
+            <template if:false={_item.hasErrors}>
+                <div class="custom-layout-item line-total">
+                    <label class="total-label">
+                        <strong>Line Total: 
+                            <lightning-formatted-number 
+                                class="total-value" 
+                                value={lineTotal} 
+                                format-style="currency" 
+                                currency-code="USD">
+                            </lightning-formatted-number>
+                        </strong>
+                    </label>
+                    <div class="slds-m-top_x-small" if:true={_item.tradeDiscount}>
+                        <p class="red-message">Price with Trade Discount: ${totalPriceWithTradeDiscount}</p>
+                    </div>
+                </div>
+            </template>
+        </div>        
+        <template if:false={_item.hasErrors}>
+            <div class="custom-layout">
+                <div class="pricing-container">
+                    <div class="pricing-details">
+                        <div> 
+                            <b>Book Price: </b> 
+                            <template if:true={_item.bookPrice}>
+                                ${_item.bookPrice} ({_item.salesUom}) / ${pricingUomBookPrice} ({_item.pricingUom})
+                            </template>
+                            <template if:false={_item.bookPrice}>Not Available</template><br/>
+        
+                            <b>CSP Customer Price: </b> 
+                            <template if:true={_item.customerPrice}>
+                                ${_item.customerPrice} ({_item.salesUom}) / ${pricingUomCustomerPrice} ({_item.pricingUom})
+                            </template>
+                            <template if:false={_item.customerPrice}>Not Available</template><br/>
+        
+                            <b>Discount %: </b> 
+                            <template if:true={_item.discount}>{_item.discount}</template>
+                            <template if:false={_item.discount}>Not Applicable</template><br/>
+        
+                            <b>Trade Discount %: </b>
+                            <template if:true={_item.tradeDiscount}>{_item.tradeDiscountPercentage}</template>
+                            <template if:false={_item.isTradeDiscount}>Not Applicable</template><br/>
+        
+                            <b>Price Group: </b>
+                            <template if:true={_item.accountPriceGroup}>{_item.accountPriceGroup}</template>
+                            <template if:false={_item.accountPriceGroup}>Not Applicable</template><br/>
+                        </div>
+                        <div>
+                            <template if:true={hasApprover}>
+                                <b>Cost: </b> 
+                                <template if:true={_item.cost}>
+                                    <!--SSN-33 commented out for SSN-33
+                                    ${salesUomCost} ({_item.salesUom}) / ${pricingUomCost} ({_item.pricingUom})-->
+                                    ${_item.cost} ({_item.salesUom}) / ${pricingUomCost} ({_item.pricingUom})
+                                </template>
+                                <template if:false={_item.cost}>Not Available</template><br/>
+        
+                                <b>Margin %: </b> 
+                                <template if:true={_item.margin}>{_item.margin}</template>
+                                <template if:false={_item.margin}>Not Applicable</template><br/>
+        
+                                <b>Approval Status: </b> 
+                                <template if:true={_item.approvalStatus}>{_item.approvalStatus}</template>
+                                <template if:false={_item.approvalStatus}>TBD</template><br/>
+        
+                                <b>Approval Reason: </b> 
+                                <template if:true={_item.approvalReason}>{_item.approvalReason}</template>
+                                <template if:false={_item.approvalReason}>Not Specified</template><br/>
+                            </template>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </template>        
+        
+    </div>
+</template>
