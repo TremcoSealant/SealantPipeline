@@ -1,0 +1,29 @@
+<template>
+    <template if:true={loading}>
+        <lightning-spinner variant="brand" size="large" alternative-text="Loading projects"></lightning-spinner>
+    </template>
+
+    <template if:false={loading}>
+        <template if:true={errorMessage}>
+            <div class="slds-text-color_error slds-m-bottom_small">{errorMessage}</div>
+        </template>
+
+        <template if:true={hasProjects}>
+            <c-rocket-data-table
+                tdata={projectRows}
+                columns={columns}
+                pagination
+                sort="true"
+                show-filters="true"
+                show-filters-basis="Original Data"
+                is-responsive={mobileView}
+                pagination-show-per-page
+                filter-show-per-page>
+            </c-rocket-data-table>
+        </template>
+
+        <template if:true={showEmptyState}>
+            <div class="slds-text-body_regular">No projects found.</div>
+        </template>
+    </template>
+</template>

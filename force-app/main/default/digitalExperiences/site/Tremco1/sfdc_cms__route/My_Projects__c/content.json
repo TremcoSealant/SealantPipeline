@@ -1,0 +1,12 @@
+{
+  "type" : "sfdc_cms__route",
+  "title" : "My Projects",
+  "contentBody" : {
+    "activeViewId" : "My_Projects",
+    "configurationTags" : [ ],
+    "pageAccess" : "UseParent",
+    "routeType" : "custom-my-projects",
+    "urlPrefix" : "my-projects"
+  },
+  "urlName" : "my-projects"
+}

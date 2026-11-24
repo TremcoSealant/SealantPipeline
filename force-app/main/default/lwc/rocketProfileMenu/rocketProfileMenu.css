@@ -1,0 +1,81 @@
+/* guest styles */
+.profile-menu__guest-link {
+    color: var(--guestLinkColor);
+}
+
+
+.profile-menu__guest-link-icon {
+    --sds-c-icon-color-foreground-default: var(--guestLinkColor);
+}
+
+.profile-menu__guest-link-content {
+    flex-direction: var(--guestLinkOrientation);
+}
+
+.profile-menu__guest-link-text {
+    font-size: var(--dxp-g-font-size-5);
+    font-weight: var(--guestTextStyleBold);
+    font-style: var(--guestTextStyleItalic);
+    text-decoration: var(--guestTextDecoration);
+}
+
+/* authorized user styles */
+.profile-menu__auth-button > div {
+    color: var(--authTextColor, var(--dxp-g-root-contrast, black));
+    flex-direction: var(--authTextOrientation);
+}
+
+.profile-menu__auth-button-text {
+    font-size: var(--dxp-s-body-small-font-size), var(--dxp-g-font-size-2);
+    display: inline-block;
+    font-family: var(--dxp-s-text-heading-small-font-family);
+    font-weight: var(--dxp-s-text-heading-small-font-weight);
+    line-height: var(--dxp-s-text-heading-small-line-height);
+}
+
+.profile-menu__auth-button:hover {
+    background-color: var(--authHoverColor);
+}
+
+.profile-menu__dropdown {
+    width: 70vw;
+    background-color: var(--authMenuBackgroundColor);
+}
+
+.profile-menu__list-item,
+.profile-menu__list-item-mobile {
+    color: var(--authTextColor);
+    font-size: var(--dxp-s-body-small-font-size);
+    font-family: var(--dxp-s-text-heading-small-font-family);
+    font-weight: var(--dxp-s-text-heading-small-font-weight);
+}
+
+.profile-menu__list-item, .profile-menu__auth-button {
+    padding:  var(--dxp-g-spacing-small) var(--dxp-g-spacing-medium);
+}
+
+.profile-menu__list-item:hover {
+    color: var(--authTextColor);
+    background-color: var(--authHoverColor);
+    text-decoration: none;
+}
+
+.profile-menu__icon {
+    --sds-c-icon-color-foreground-default: var(--authTextColor);
+}
+/* For media queries we need to use max-width. */
+@media (max-width: 767px) {
+    .profile-menu__guest-link > div {
+        max-width: 5.5vw;
+    }
+    .profile-menu__dropdown {
+        width: 50vw;
+    }
+    .profile-menu__list-item-mobile, .profile-menu__list-item {
+        font-size: var(--dxp-g-font-size-2);
+        padding: var(--dxp-g-spacing-xsmall) var(--dxp-g-spacing-small);
+    }
+    .profile-menu__list-item, .profile-menu__auth-button {
+        padding:  var(--dxp-g-spacing-small) var(--dxp-g-spacing-xsmall);
+    }
+}
