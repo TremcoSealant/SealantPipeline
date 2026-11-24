@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Rocket Profile Menu</masterLabel>
+    <description>Rocket Profile Menu</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="guestLinkText" type="String" label="Guest Link Text" default="Log In"></property>
+            <property name="guestLinkColor" type="Color" label="Guest Link Color" default="#FFF" ></property>
+            <property name="guestLinkHoverColor" type="Color" label="Guest Link Hover Color" default="#FFF" ></property>
+            <property name="guestLinkOrientation" type="String" datasource="Left of Icon, Right of Icon" label="Guest Link Orientation" default="Left of Icon"></property>
+            <property name="guestTextStyleBold" type="Boolean" label="Guest Text Style Bold"></property>
+            <property name="guestTextStyleItalic" type="Boolean" label="Guest Text Style Italic"></property>
+            <property name="guestTextStyleUnderline" type="Boolean" label="Guest Text Style Underline" default="True"></property>
+            <property name="guestTextStyleStrikethrough" type="Boolean" label="Guest Text Style Strikethrough"></property>
+            <property name="authUserMenuStyle" type="String" description="Select a user menu style" datasource="Icon And Name, Icon" label="Authenticated User Menu Style" default="Icon And Name"></property>
+            <property name="authMenuBackgroundColor" type="Color" label="Authenticated User Menu Color" default="#FFF"></property>
+            <property name="authTextColor" type="Color" label="Authenticated User Text Color" default="#FFF"></property>
+            <property name="authHoverColor" type="Color" label="Authenticated User Hover Color" default="#FFF"></property>
+            <property name="authIconStyle" type="String" datasource="User Icon,Company Logo" label="Authenticated User Icon Style" default="User Icon"></property>
+            <property name="authIncludeCompanyName" type="Boolean" label="Include Company Name"></property>
+            <property name="authTextOrientation" type="String" datasource="Left of Icon, Right of Icon" label="Authenticated User Text Orientation" default="Left of Icon"></property>
+            <property name="authDefaultMenu" type="String" label="Default Menu" default="Default My Account Menu" description="Select a navigation menu. To create or manage menus, go to Navigation under Settings. These menu item types aren't shown on this menu: Data Source, Event, Global Action, Menu Label, Navigational Topic." datasource="apex://Rocket_NavigationMenuPicklist"/>
+            <property name="authLogOut" type="String" label="Log Out" default="Log Out"></property>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

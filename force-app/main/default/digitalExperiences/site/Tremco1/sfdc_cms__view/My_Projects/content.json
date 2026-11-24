@@ -1,0 +1,63 @@
+{
+  "type" : "sfdc_cms__view",
+  "title" : "My Projects",
+  "contentBody" : {
+    "component" : {
+      "children" : [ {
+        "children" : [ {
+          "attributes" : {
+            "backgroundImageConfig" : "",
+            "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "dxpStyle" : { },
+            "sectionConfig" : "{\"UUID\":\"20214b4a-fbe5-4d7e-b9ad-3da0de32d75a\",\"columns\":[{\"UUID\":\"ad6f885b-8f40-41bb-b686-f8b8cb521f21\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":[]}]}"
+          },
+          "children" : [ {
+            "children" : [ {
+              "attributes" : {
+                "dxpStyle" : { }
+              },
+              "definition" : "c:tremcoMyProjects",
+              "id" : "8fef6a6a-0d16-4563-8107-f7414a63fd26",
+              "type" : "component"
+            } ],
+            "id" : "ad6f885b-8f40-41bb-b686-f8b8cb521f21",
+            "name" : "col1",
+            "title" : "Column 1",
+            "type" : "region"
+          } ],
+          "definition" : "community_layout:section",
+          "id" : "20214b4a-fbe5-4d7e-b9ad-3da0de32d75a",
+          "type" : "component"
+        } ],
+        "id" : "6ddd40ee-4902-43e3-a18d-020acb9f4e0d",
+        "name" : "content",
+        "title" : "Content",
+        "type" : "region"
+      }, {
+        "children" : [ {
+          "attributes" : {
+            "customHeadTags" : "",
+            "description" : "",
+            "dxpStyle" : { },
+            "pageTitle" : "My Projects",
+            "recordId" : "{!recordId}"
+          },
+          "definition" : "community_builder:seoAssistant",
+          "id" : "b7e0a313-d484-43ab-bb22-7b949a52eef6",
+          "type" : "component"
+        } ],
+        "id" : "16c7f8c0-cf73-4705-a80b-d54a5f799f2d",
+        "name" : "sfdcHiddenRegion",
+        "title" : "sfdcHiddenRegion",
+        "type" : "region"
+      } ],
+      "definition" : "community_layout:sldsFlexibleLayout",
+      "id" : "efcac65e-4748-4f32-99a9-5f09a969fd8a",
+      "type" : "component"
+    },
+    "dataProviders" : [ ],
+    "themeLayoutType" : "hGjfKaQyfZDKuwFYZqEnHGUSmX74H9",
+    "viewType" : "custom-my-projects"
+  },
+  "urlName" : "my-projects"
+}
